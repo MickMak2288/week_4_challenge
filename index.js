@@ -86,3 +86,38 @@ var finances = [
 ['Jan-2017', 138230],
 ['Feb-2017', 671099]
 ];
+
+const totalMonths = finances.length;
+
+let totalProfit = 0;
+for (const data of finances) {
+  totalProfit += data[1];
+}
+
+let averageChange = 0;
+for (let i = 1; i < finances.length; i++) {
+  const change = finances[i][1] - finances[i - 1][1];
+  averageChange += change;
+}
+averageChange /= finances.length - 1;
+
+let greatestIncrease = { month: '', profit: -Infinity };
+let greatestDecrease = { month: '', profit: Infinity };
+for (let i = 1; i < finances.length; i++) {
+  const change = finances[i][1] - finances[i - 1][1];
+  if (change > greatestIncrease.profit) {
+    greatestIncrease = { month: finances[i][0], profit: change };
+  }
+  if (change < greatestDecrease.profit) {
+    greatestDecrease = { month: finances[i][0], profit: change };
+  }
+}
+
+console.log('Financial Analysis');
+console.log('----------------------------');
+console.log(`Total Months: ${totalMonths}`);
+console.log(`Total: $${totalProfit}`);
+console.log(`Average Change: $${averageChange.toFixed(2)}`);
+console.log(`Greatest Increase in Profits: ${greatestIncrease.month} ($${greatestIncrease.profit})`);
+console.log(`Greatest Decrease in Profits: ${greatestDecrease.month} ($${greatestDecrease.profit})`);
+
